@@ -1,67 +1,70 @@
 ﻿@model Blog.Models.Post
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excerpt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excerpt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CoverImagePath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CoverImagePath)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Public)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Public)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-    </dl>
+	<h4>Post</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Title)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Title)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Content)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Content)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Excerpt)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Excerpt)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.CoverImagePath)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.CoverImagePath)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Views)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Views)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Public)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Public)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Created)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Created)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Updated)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Updated)
+		</dd>
+	</dl>
 </div>
 <div>
-    <a asp-action="Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to List</a>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"><i class="fas fa-edit"></i> Delete</a>
+	<a asp-action="Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to List</a>
+	<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+	<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"
+	   onclick="return confirm('Are you sure to delete this?');">
+		<i class="fas fa-edit"></i> Delete
+	</a>
 </div>

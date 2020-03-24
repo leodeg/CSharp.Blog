@@ -40,6 +40,8 @@ namespace Blog
 			services.AddTransient<IRepository<Tag>, TagRepository>();
 			services.AddTransient<IRepository<Post>, PostRepository>();
 
+			services.AddTransient<IFileManager, FileManager>();
+
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}

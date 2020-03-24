@@ -8,17 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Blog.Data;
 using Blog.Models;
 using Blog.Models.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace Blog.Controllers
 {
 	public class PostsController : Controller
 	{
 		private readonly IRepository<Post> repository;
+		private readonly IFileManager fileManager;
 		private readonly string PostForm = "PostForm";
 
-		public PostsController(IRepository<Post> repository)
+		public PostsController(IRepository<Post> repository, IFileManager fileManager)
 		{
 			this.repository = repository;
+			this.fileManager = fileManager;
 		}
 
 		public IActionResult Index()
@@ -54,14 +57,38 @@ namespace Blog.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Save(Post post)
+		public async Task<IActionResult> Save(IFormFile image, Post post)
 		{
 			if (!ModelState.IsValid)
 				return View(PostForm, post);
 
 			if (post.Id == 0)
+			{
+				if (image != null)
+					post.CoverImagePath = await fileManager.SaveImage(image);
 				repository.Create(post);
-			else repository.Update(post.Id, post);
+			}
+			else
+			{
+				if (image != null)
+				{
+					Post oldPost = repository.Get(post.Id);
+					if (string.IsNullOrWhiteSpace(oldPost.CoverImagePath))
+					{
+						post.CoverImagePath = await fileManager.SaveImage(image);
+					}
+					else
+					{
+						if (oldPost.CoverImagePath != post.CoverImagePath)
+						{
+							fileManager.DeleteImage(oldPost.CoverImagePath);
+							post.CoverImagePath = await fileManager.SaveImage(image);
+						}
+					}
+				}
+
+				repository.Update(post.Id, post);
+			}
 
 			await repository.SaveAsync();
 			return RedirectToAction(nameof(Index));

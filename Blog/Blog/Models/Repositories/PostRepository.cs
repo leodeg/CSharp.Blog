@@ -43,6 +43,9 @@ namespace Blog.Models.Repositories
 			oldPost.Excerpt = entity.Excerpt;
 			oldPost.Public = entity.Public;
 
+			if (!string.IsNullOrWhiteSpace(entity.CoverImagePath))
+				oldPost.CoverImagePath = entity.CoverImagePath;
+
 			oldPost.Updated = DateTime.Now;
 		}
 
