@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Blog.Models
 {
-
 	public class Websites : Model
 	{
 		public string Website { get; set; }

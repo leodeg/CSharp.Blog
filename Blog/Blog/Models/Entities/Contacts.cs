@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Blog.Models
 {
-
 	public class Contacts : Model
 	{
 		public string Phone { get; set; }

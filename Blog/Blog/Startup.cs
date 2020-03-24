@@ -12,6 +12,8 @@ using Blog.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Blog.Models.Repositories;
+using Blog.Models;
 
 namespace Blog
 {
@@ -32,6 +34,9 @@ namespace Blog
 					Configuration.GetConnectionString("DefaultConnection")));
 			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<ApplicationDbContext>();
+
+			services.AddTransient<IRepository<Tag>, TagRepository>();
+
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}

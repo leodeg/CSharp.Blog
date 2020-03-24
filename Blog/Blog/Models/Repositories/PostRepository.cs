@@ -6,39 +6,44 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.Repositories
 {
-	public class TagRepository : IRepository<Tag>
+
+	public class PostRepository : IRepository<Post>
 	{
 		private ApplicationDbContext context;
 
-		public TagRepository(ApplicationDbContext context)
+		public PostRepository(ApplicationDbContext context)
 		{
 			this.context = context;
 		}
 
-		public IEnumerable<Tag> Get()
+		public IEnumerable<Post> Get()
 		{
-			return context.Tags;
+			return context.Posts;
 		}
 
-		public Tag Get(int id)
+		public Post Get(int id)
 		{
-			return context.Tags.FirstOrDefault(x => x.Id == id);
+			return context.Posts.FirstOrDefault(x => x.Id == id);
 		}
 
-		public void Create(Tag entity)
+		public void Create(Post entity)
 		{
-			context.Tags.Add(entity);
+			context.Posts.Add(entity);
 		}
 
-		public void Update(int id, Tag entity)
+		public void Update(int id, Post entity)
 		{
 			if (entity == null) throw new ArgumentNullException();
 
-			Tag oldTag = context.Tags.FirstOrDefault(x => x.Id == id);
+			Post oldPost = context.Posts.SingleOrDefault(x => x.Id == id);
 			if (entity == null) throw new ArgumentOutOfRangeException("Can't find and update item with id: " + id);
 
-			oldTag.Name = entity.Name;
-			oldTag.Updated = DateTime.Now;
+			oldPost.Title = entity.Title;
+			oldPost.Content = entity.Content;
+			oldPost.Excerpt = entity.Excerpt;
+			oldPost.Public = entity.Public;
+
+			oldPost.Updated = DateTime.Now;
 		}
 
 		public bool Delete(int id)

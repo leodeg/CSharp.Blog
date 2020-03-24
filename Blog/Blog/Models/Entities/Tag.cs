@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Blog.Models
 {
-
 	public class Tag : Model
 	{
 		[Required]

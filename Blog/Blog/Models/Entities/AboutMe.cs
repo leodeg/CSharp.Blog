@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Blog.Models
 {
-
 	public class AboutMe : Model
 	{
 		[ForeignKey(name: "Contacts")]

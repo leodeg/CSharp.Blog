@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Blog.Models;
+using Blog.Models.Repositories;
 
 namespace Blog.Controllers
 {
@@ -13,9 +14,12 @@ namespace Blog.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		private readonly IRepository<Tag> tagsRepository;
+
+		public HomeController(ILogger<HomeController> logger, IRepository<Tag> tagsRepository)
 		{
 			_logger = logger;
+			this.tagsRepository = tagsRepository;
 		}
 
 		public IActionResult Index()

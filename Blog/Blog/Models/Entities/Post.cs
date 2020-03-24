@@ -18,7 +18,6 @@ namespace Blog.Models
 		public string CoverImagePath { get; set; }
 
 		public int Views { get; set; }
-		public bool Public { get; set; }
-
+		public bool Public { get; set; } = true;
 	}
 }
