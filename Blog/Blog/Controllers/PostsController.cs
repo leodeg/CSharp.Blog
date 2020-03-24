@@ -14,18 +14,19 @@ namespace Blog.Controllers
 	public class PostsController : Controller
 	{
 		private readonly IRepository<Post> repository;
+		private readonly string PostForm = "PostForm";
 
 		public PostsController(IRepository<Post> repository)
 		{
 			this.repository = repository;
 		}
 
-		public IActionResult Index ()
+		public IActionResult Index()
 		{
 			return View(repository.Get());
 		}
 
-		public async Task<IActionResult> Details(int? id)
+		public IActionResult Details(int? id)
 		{
 			if (id == null)
 				return NotFound();
@@ -37,33 +38,47 @@ namespace Blog.Controllers
 			return View(post);
 		}
 
-		public async Task<IActionResult> Edit(Post editPost = null)
+		public IActionResult Create()
 		{
-			Post post = editPost?? new Post();
-			return View(post);
+			return View(PostForm, new Post());
+		}
+
+		public IActionResult Edit(int? id)
+		{
+			Post post = repository.Get(id.Value);
+			if (post == null)
+				return NotFound();
+
+			return View(PostForm, post);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Save([Bind("Title,Content,Excerpt,CoverImagePath,Views,Public,Id,Created,Updated")] Post post)
+		public async Task<IActionResult> Save(Post post)
 		{
-			if (ModelState.IsValid)
-			{
-				if (post.Id == 0)
-					repository.Create(post);
-				else repository.Update(post.Id, post);
-				return RedirectToAction(nameof(Index), nameof(HomeController));
-			}
-			return RedirectToAction(nameof(Edit), post);
+			if (!ModelState.IsValid)
+				return View(PostForm, post);
+
+			if (post.Id == 0)
+				repository.Create(post);
+			else repository.Update(post.Id, post);
+
+			await repository.SaveAsync();
+			return RedirectToAction(nameof(Index));
 		}
 
-		public IActionResult Delete(int? id)
+		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
 				return NotFound();
 
-			repository.Delete(id.Value);
-			return RedirectToAction(nameof(Index), nameof(HomeController));
+			if (!repository.Delete(id.Value))
+				return NotFound();
+
+			if (await repository.SaveAsync())
+				return RedirectToAction(nameof(Index));
+
+			return BadRequest();
 		}
 	}
 }

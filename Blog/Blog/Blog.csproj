@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Views\AboutMe\" />
-    <Folder Include="Views\Tags\" />
     <Folder Include="wwwroot\img\aboutMe\" />
     <Folder Include="wwwroot\img\posts\" />
   </ItemGroup>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Blog.Models.Tag>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Tags</h1>
+
+<p>
+	<a asp-action="Create" class="btn btn-primary">New Tag</a>
+</p>
+
+<table class="table table-striped">
+	<thead class="thead-dark">
+		<tr>
+			<th> @Html.DisplayNameFor(model => model.Name) </th>
+			<th> Actions </th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.Any())
+		{
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td> @Html.DisplayFor(modelItem => item.Name) </td>
+					<td>
+						<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-eye"></i> Details</a>
+						<a asp-action="Edit" asp-route-id="@item.Id"
+						   class="btn btn-warning">
+							<i class="fas fa-edit"></i> Edit
+						</a>
+						<a asp-action="Delete" asp-route-id="@item.Id"
+						   class="btn btn-danger"
+						   onclick="return confirm('Are you sure to delete this?');">
+							<i class="fas fa-trash"></i> Delete
+						</a>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+

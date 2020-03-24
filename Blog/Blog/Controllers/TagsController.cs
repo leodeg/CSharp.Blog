@@ -23,14 +23,29 @@ namespace Blog.Controllers
 			return View(repository.Get().OrderBy(x => x.Name));
 		}
 
+		public IActionResult Details(int? id)
+		{
+			if (id == null)
+				return NotFound();
+
+			var post = repository.Get(id.Value);
+			if (post == null)
+				return NotFound();
+
+			return View(post);
+		}
+
 		public IActionResult Create()
 		{
 			return View(TagForm, new Tag());
 		}
 
-		public IActionResult Edit(int id)
+		public IActionResult Edit(int? id)
 		{
-			var tag = repository.Get(id);
+			if (id == null)
+				return NotFound();
+
+			var tag = repository.Get(id.Value);
 			if (tag == null)
 				return NotFound();
 			return View(TagForm, tag);
@@ -51,12 +66,18 @@ namespace Blog.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		public async Task<ActionResult> Remove(int id)
+		public async Task<ActionResult> Delete(int? id)
 		{
-			if (!repository.Delete(id))
+			if (id == null)
 				return NotFound();
-			await repository.SaveAsync();
-			return RedirectToAction(nameof(Index));
+
+			if (!repository.Delete(id.Value))
+				return NotFound();
+
+			if (await repository.SaveAsync())
+				return RedirectToAction(nameof(Index));
+
+			return BadRequest();
 		}
 	}
 }

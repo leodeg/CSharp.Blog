@@ -48,10 +48,10 @@ namespace Blog.Models.Repositories
 
 		public bool Delete(int id)
 		{
-			Tag tag = context.Tags.FirstOrDefault(x => x.Id == id);
-			if (tag != null)
+			Post post = context.Posts.FirstOrDefault(x => x.Id == id);
+			if (post != null)
 			{
-				context.Tags.Remove(tag);
+				context.Posts.Remove(post);
 				return true;
 			}
 			return false;

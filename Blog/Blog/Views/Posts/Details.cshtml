@@ -61,6 +61,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"><i class="fas fa-edit"></i> Delete</a>
 </div>

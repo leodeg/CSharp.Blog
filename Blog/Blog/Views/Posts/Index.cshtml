@@ -1,77 +1,69 @@
 ﻿@model IEnumerable<Blog.Models.Post>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Posts</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create" class="btn btn-primary">New Post</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Excerpt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CoverImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Views)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Public)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Excerpt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoverImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Views)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Public)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+
+<table class="table table-striped">
+	<thead class="thead-dark">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Title)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Views)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Public)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Created)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Updated)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model.Any())
+		{
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Views)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Public)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Created)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Updated)
+					</td>
+					<td>
+						<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-eye"></i> Details</a>
+						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+						<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"
+						   onclick="return confirm('Are you sure to delete this?');">
+							<i class="fas fa-trash"></i> Delete
+						</a>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+
+
 </table>

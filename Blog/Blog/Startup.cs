@@ -32,10 +32,13 @@ namespace Blog
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+
+			services.AddDefaultIdentity<IdentityUser>(options =>
+				options.SignIn.RequireConfirmedAccount = true)
+					.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddTransient<IRepository<Tag>, TagRepository>();
+			services.AddTransient<IRepository<Post>, PostRepository>();
 
 			services.AddControllersWithViews();
 			services.AddRazorPages();
