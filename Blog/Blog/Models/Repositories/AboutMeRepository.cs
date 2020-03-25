@@ -20,14 +20,19 @@ namespace Blog.Models.Repositories
 			this.fileManager = fileManager;
 		}
 
+		public AboutMe GetFirst()
+		{
+			return context.AboutMe.Include(x => x.Contacts).Include(x => x.Websites).FirstOrDefault();
+		}
+
 		public IEnumerable<AboutMe> Get()
 		{
-			throw new NotImplementedException();
+			return context.AboutMe;
 		}
 
 		public AboutMe Get(int id)
 		{
-			throw new NotImplementedException();
+			return context.AboutMe.Include(x => x.Contacts).Include(x => x.Websites).FirstOrDefault(x => x.Id == id);
 		}
 
 		public async void Create(AboutMe entity)
@@ -61,21 +66,15 @@ namespace Blog.Models.Repositories
 
 			AboutMe oldAboutMe = context.AboutMe
 				.Include(x => x.Contacts)
-				.Include(x => x.Contacts)
+				.Include(x => x.Websites)
 				.FirstOrDefault(x => x.Id == id) ??
 					throw new ArgumentOutOfRangeException("Can't find and update item with id: " + id);
 
 			if (aboutMe.Contacts != null)
-			{
-				oldAboutMe.Contacts = aboutMe.Contacts;
-				oldAboutMe.Contacts.Id = oldAboutMe.ContactsId;
-			}
+				UpdateContacts(aboutMe, oldAboutMe);
 
 			if (aboutMe.Websites != null)
-			{
-				oldAboutMe.Websites = aboutMe.Websites;
-				oldAboutMe.Websites.Id = oldAboutMe.WebsitesId;
-			}
+				UpdateWebsites(aboutMe, oldAboutMe);
 
 			if (image != null)
 			{
@@ -85,7 +84,42 @@ namespace Blog.Models.Repositories
 					image);
 			}
 
+			oldAboutMe.Title = aboutMe.Title;
+			oldAboutMe.Excerpt = aboutMe.Excerpt;
+			oldAboutMe.Description = aboutMe.Description;
+
 			oldAboutMe.Updated = DateTime.Now;
+		}
+
+		private void UpdateContacts(AboutMe aboutMe, AboutMe oldAboutMe)
+		{
+			if (oldAboutMe.Contacts == null)
+				context.Contacts.Add(aboutMe.Contacts);
+			else
+			{
+				oldAboutMe.Contacts.Phone = aboutMe.Contacts.Phone;
+				oldAboutMe.Contacts.Email = aboutMe.Contacts.Email;
+				oldAboutMe.Contacts.Country = aboutMe.Contacts.Country;
+				oldAboutMe.Contacts.City = aboutMe.Contacts.City;
+				oldAboutMe.Contacts.PostAddress = aboutMe.Contacts.PostAddress;
+			}
+		}
+
+		private void UpdateWebsites(AboutMe aboutMe, AboutMe oldAboutMe)
+		{
+			if (oldAboutMe.Websites == null)
+				context.Websites.Add(aboutMe.Websites);
+			else
+			{
+				oldAboutMe.Websites.Website = aboutMe.Websites.Website;
+				oldAboutMe.Websites.Github = aboutMe.Websites.Github;
+				oldAboutMe.Websites.LinkedIn = aboutMe.Websites.LinkedIn;
+				oldAboutMe.Websites.Facebook = aboutMe.Websites.Facebook;
+				oldAboutMe.Websites.Instagram = aboutMe.Websites.Instagram;
+				oldAboutMe.Websites.Twitter = aboutMe.Websites.Twitter;
+				oldAboutMe.Websites.Youtube = aboutMe.Websites.Youtube;
+				oldAboutMe.Websites.Vkontakte = aboutMe.Websites.Vkontakte;
+			}
 		}
 
 		public bool Delete(int id)

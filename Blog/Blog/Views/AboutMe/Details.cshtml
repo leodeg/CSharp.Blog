@@ -1,0 +1,164 @@
+﻿@model Blog.Models.AboutMe
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+	<h4>Post</h4>
+	<hr />
+	<h3>Base Info</h3>
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Title)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Title)
+		</dd>
+
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Excerpt)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Excerpt)
+		</dd>
+	</dl>
+
+	@if (Model.Contacts != null)
+	{
+		<h3>Contacts</h3>
+		<dl class="row">
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Contacts.Phone)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Contacts.Phone)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Contacts.Email)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Contacts.Email)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Contacts.Country)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Contacts.Country)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Contacts.City)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Contacts.City)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Contacts.PostAddress)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Contacts.PostAddress)
+			</dd>
+		</dl>
+	}
+
+	@if (Model.Websites != null)
+	{
+		<h3>Websites</h3>
+		<dl class="row">
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Website)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Website)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Github)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Github)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.LinkedIn)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.LinkedIn)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Facebook)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Facebook)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Instagram)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Instagram)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Twitter)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Twitter)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Youtube)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Youtube)
+			</dd>
+
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Websites.Vkontakte)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Websites.Vkontakte)
+			</dd>
+		</dl>
+	}
+
+
+	<h3>Base Information</h3>
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Created)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Created)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Updated)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Updated)
+		</dd>
+	</dl>
+
+	@if (!string.IsNullOrEmpty(Model.ImagePath))
+	{
+		<h4>Image Preview</h4>
+		<hr />
+		<img src="~/content/img/@Model.ImagePath" alt="" style="max-width: 45%;" class="mb-3" />
+	}
+</div>
+
+<div>
+	<a asp-action="Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+	<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+	<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"
+	   onclick="return confirm('Are you sure to delete this?');">
+		<i class="fas fa-edit"></i> Delete
+	</a>
+</div>

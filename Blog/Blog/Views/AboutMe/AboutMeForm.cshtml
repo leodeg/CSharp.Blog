@@ -1,0 +1,132 @@
+﻿@model Blog.Models.AboutMe
+
+@{
+	ViewData["Title"] = Model.Id == 0 ? "Create Post" : "Edit Post";
+}
+
+<h1>About Me</h1>
+@if (Model.Id == 0)
+{
+	<h3>Create</h3>
+}
+else
+{
+	<h3>Edit</h3>
+}
+
+<hr />
+<div class="row">
+	<div class="col-md-12">
+		<form asp-controller="AboutMe" asp-action="Save" id="form" method="post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="@Model.Title" class="control-label"></label>
+				<input asp-for="@Model.Title" class="form-control" />
+				<span asp-validation-for="@Model.Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Excerpt" class="control-label"></label>
+				<textarea asp-for="@Model.Excerpt" class="form-control"></textarea>
+				<span asp-validation-for="@Model.Excerpt" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Description" class="control-label"></label>
+				<textarea asp-for="@Model.Description" class="form-control"></textarea>
+				<span asp-validation-for="@Model.Description" class="text-danger"></span>
+			</div>
+
+			<h3>Contacts</h3>
+			<div class="form-group">
+				<label asp-for="@Model.Contacts.Phone" class="control-label"></label>
+				<input asp-for="@Model.Contacts.Phone" class="form-control" />
+				<span asp-validation-for="@Model.Contacts.Phone" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Contacts.Email" class="control-label"></label>
+				<input asp-for="@Model.Contacts.Email" class="form-control" />
+				<span asp-validation-for="@Model.Contacts.Email" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Contacts.Country" class="control-label"></label>
+				<input asp-for="@Model.Contacts.Country" class="form-control" />
+				<span asp-validation-for="@Model.Contacts.Country" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Contacts.City" class="control-label"></label>
+				<input asp-for="@Model.Contacts.City" class="form-control" />
+				<span asp-validation-for="@Model.Contacts.City" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="@Model.Contacts.PostAddress" class="control-label"></label>
+				<input asp-for="@Model.Contacts.PostAddress" class="form-control" />
+				<span asp-validation-for="@Model.Contacts.PostAddress" class="text-danger"></span>
+			</div>
+
+			<h3>Websites</h3>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Website" class="control-label"></label>
+				<input asp-for="@Model.Websites.Website" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Website" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Github" class="control-label"></label>
+				<input asp-for="@Model.Websites.Github" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Github" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.LinkedIn" class="control-label"></label>
+				<input asp-for="@Model.Websites.LinkedIn" class="form-control" />
+				<span asp-validation-for="@Model.Websites.LinkedIn" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Facebook" class="control-label"></label>
+				<input asp-for="@Model.Websites.Facebook" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Facebook" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Instagram" class="control-label"></label>
+				<input asp-for="@Model.Websites.Instagram" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Instagram" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Twitter" class="control-label"></label>
+				<input asp-for="@Model.Websites.Twitter" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Twitter" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Youtube" class="control-label"></label>
+				<input asp-for="@Model.Websites.Youtube" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Youtube" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="@Model.Websites.Vkontakte" class="control-label"></label>
+				<input asp-for="@Model.Websites.Vkontakte" class="form-control" />
+				<span asp-validation-for="@Model.Websites.Vkontakte" class="text-danger"></span>
+			</div>
+
+			<h3>Image</h3>
+			<div class="form-group">
+				<label asp-for="ImagePath" class="control-label"></label>
+				<input type="file" id="image" name="image" class="form-control-file" />
+				<span asp-validation-for="ImagePath" class="text-danger"></span>
+			</div>
+
+			<input type="hidden" asp-for="Id" />
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index"><i class="fas fa-arrow-left"></i> Back to List</a>
+</div>
+
+
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

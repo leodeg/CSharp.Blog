@@ -9,8 +9,10 @@ namespace Blog.Models
 {
 	public class Contacts : Model
 	{
+		[DataType(DataType.PhoneNumber)]
 		public string Phone { get; set; }
 		[Required]
+		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 		[Required]
 		public string Country { get; set; }

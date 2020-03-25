@@ -74,6 +74,7 @@ namespace Blog.Controllers
 			SaveTags(post);
 			await SavePost(image, post);
 
+			await postsRepository.SaveAsync();
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -92,9 +93,8 @@ namespace Blog.Controllers
 		{
 			if (post.Id == 0)
 				await postsRepository.Create(post, image);
-			else await postsRepository.Update(post.Id, post, image);
-
-			await postsRepository.SaveAsync();
+			else
+				await postsRepository.Update(post.Id, post, image);
 		}
 
 		public async Task<IActionResult> Delete(int? id)

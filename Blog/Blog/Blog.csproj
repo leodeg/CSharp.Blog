@@ -18,7 +18,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Views\AboutMe\" />
     <Folder Include="wwwroot\content\img\" />
   </ItemGroup>
 

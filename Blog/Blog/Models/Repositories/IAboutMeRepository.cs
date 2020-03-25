@@ -10,6 +10,7 @@ namespace Blog.Models.Repositories
 
 	public interface IAboutMeRepository : IRepository<AboutMe>
 	{
+		AboutMe GetFirst();
 		Task Create(AboutMe aboutMe, IFormFile image);
 		Task Update(int id, AboutMe aboutMe, IFormFile image);
 	}
