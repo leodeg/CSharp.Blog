@@ -14,19 +14,28 @@ namespace Blog.Controllers
 {
 	public class PostsController : Controller
 	{
-		private readonly IRepository<Post> repository;
+		private readonly IPostRepository postsRepository;
+		private readonly ITagRepository tagsRepository;
 		private readonly IFileManager fileManager;
+
 		private readonly string PostForm = "PostForm";
 
-		public PostsController(IRepository<Post> repository, IFileManager fileManager)
+		public PostsController(IPostRepository postsRepository, ITagRepository tagsRepository, IFileManager fileManager)
 		{
-			this.repository = repository;
+			this.postsRepository = postsRepository;
+			this.tagsRepository = tagsRepository;
 			this.fileManager = fileManager;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(string tag = "", string title = "")
 		{
-			return View(repository.Get());
+			if (!string.IsNullOrEmpty(tag))
+				return View(postsRepository.GetByTag(tag));
+
+			if (!string.IsNullOrEmpty(title))
+				return View(postsRepository.GetByTitle(title));
+
+			return View(postsRepository.Get());
 		}
 
 		public IActionResult Details(int? id)
@@ -34,7 +43,7 @@ namespace Blog.Controllers
 			if (id == null)
 				return NotFound();
 
-			var post = repository.Get(id.Value);
+			var post = postsRepository.Get(id.Value);
 			if (post == null)
 				return NotFound();
 
@@ -48,7 +57,7 @@ namespace Blog.Controllers
 
 		public IActionResult Edit(int? id)
 		{
-			Post post = repository.Get(id.Value);
+			Post post = postsRepository.Get(id.Value);
 			if (post == null)
 				return NotFound();
 
@@ -62,36 +71,54 @@ namespace Blog.Controllers
 			if (!ModelState.IsValid)
 				return View(PostForm, post);
 
+			SaveTags(post);
+			await SavePost(image, post);
+
+			return RedirectToAction(nameof(Index));
+		}
+
+		private void SaveTags(Post post)
+		{
+			if (!string.IsNullOrEmpty(post.Tags))
+			{
+				foreach (var tag in post.TagsList)
+				{
+					tagsRepository.Create(tag);
+				}
+			}
+		}
+
+		private async Task SavePost(IFormFile image, Post post)
+		{
 			if (post.Id == 0)
 			{
 				if (image != null)
-					post.CoverImagePath = await fileManager.SaveImage(image);
-				repository.Create(post);
+					post.ImagePath = await fileManager.SaveImage(image);
+				postsRepository.Create(post);
 			}
 			else
 			{
 				if (image != null)
 				{
-					Post oldPost = repository.Get(post.Id);
-					if (string.IsNullOrWhiteSpace(oldPost.CoverImagePath))
+					Post oldPost = postsRepository.Get(post.Id);
+					if (string.IsNullOrWhiteSpace(oldPost.ImagePath))
 					{
-						post.CoverImagePath = await fileManager.SaveImage(image);
+						post.ImagePath = await fileManager.SaveImage(image);
 					}
 					else
 					{
-						if (oldPost.CoverImagePath != post.CoverImagePath)
+						if (oldPost.ImagePath != post.ImagePath)
 						{
-							fileManager.DeleteImage(oldPost.CoverImagePath);
-							post.CoverImagePath = await fileManager.SaveImage(image);
+							fileManager.DeleteImage(oldPost.ImagePath);
+							post.ImagePath = await fileManager.SaveImage(image);
 						}
 					}
 				}
 
-				repository.Update(post.Id, post);
+				postsRepository.Update(post.Id, post);
 			}
 
-			await repository.SaveAsync();
-			return RedirectToAction(nameof(Index));
+			await postsRepository.SaveAsync();
 		}
 
 		public async Task<IActionResult> Delete(int? id)
@@ -99,10 +126,14 @@ namespace Blog.Controllers
 			if (id == null)
 				return NotFound();
 
-			if (!repository.Delete(id.Value))
+			var post = postsRepository.Get(id.Value);
+			if (!string.IsNullOrEmpty(post.ImagePath))
+				fileManager.DeleteImage(post.ImagePath);
+
+			if (!postsRepository.Delete(id.Value))
 				return NotFound();
 
-			if (await repository.SaveAsync())
+			if (await postsRepository.SaveAsync())
 				return RedirectToAction(nameof(Index));
 
 			return BadRequest();

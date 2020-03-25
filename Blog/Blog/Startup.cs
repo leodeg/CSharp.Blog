@@ -37,7 +37,10 @@ namespace Blog
 				options.SignIn.RequireConfirmedAccount = true)
 					.AddEntityFrameworkStores<ApplicationDbContext>();
 
+			services.AddTransient<ITagRepository, TagRepository>();
 			services.AddTransient<IRepository<Tag>, TagRepository>();
+
+			services.AddTransient<IPostRepository, PostRepository>();
 			services.AddTransient<IRepository<Post>, PostRepository>();
 
 			services.AddTransient<IFileManager, FileManager>();

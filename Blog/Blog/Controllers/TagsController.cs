@@ -10,10 +10,10 @@ namespace Blog.Controllers
 {
 	public class TagsController : Controller
 	{
-		private readonly IRepository<Tag> repository;
+		private readonly ITagRepository repository;
 		private readonly string TagForm = "TagForm";
 
-		public TagsController(IRepository<Tag> repository)
+		public TagsController(ITagRepository repository)
 		{
 			this.repository = repository;
 		}
