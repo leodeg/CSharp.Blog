@@ -91,32 +91,8 @@ namespace Blog.Controllers
 		private async Task SavePost(IFormFile image, Post post)
 		{
 			if (post.Id == 0)
-			{
-				if (image != null)
-					post.ImagePath = await fileManager.SaveImage(image);
-				postsRepository.Create(post);
-			}
-			else
-			{
-				if (image != null)
-				{
-					Post oldPost = postsRepository.Get(post.Id);
-					if (string.IsNullOrWhiteSpace(oldPost.ImagePath))
-					{
-						post.ImagePath = await fileManager.SaveImage(image);
-					}
-					else
-					{
-						if (oldPost.ImagePath != post.ImagePath)
-						{
-							fileManager.DeleteImage(oldPost.ImagePath);
-							post.ImagePath = await fileManager.SaveImage(image);
-						}
-					}
-				}
-
-				postsRepository.Update(post.Id, post);
-			}
+				await postsRepository.Create(post, image);
+			else await postsRepository.Update(post.Id, post, image);
 
 			await postsRepository.SaveAsync();
 		}
@@ -125,10 +101,6 @@ namespace Blog.Controllers
 		{
 			if (id == null)
 				return NotFound();
-
-			var post = postsRepository.Get(id.Value);
-			if (!string.IsNullOrEmpty(post.ImagePath))
-				fileManager.DeleteImage(post.ImagePath);
 
 			if (!postsRepository.Delete(id.Value))
 				return NotFound();

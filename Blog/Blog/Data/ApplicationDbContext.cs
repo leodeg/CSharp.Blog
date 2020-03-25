@@ -16,5 +16,8 @@ namespace Blog.Data
 
 		public DbSet<Tag> Tags { get; set; }
 		public DbSet<Post> Posts { get; set; }
+		public DbSet<AboutMe> AboutMe { get; set; }
+		public DbSet<Contacts> Contacts { get; set; }
+		public DbSet<Websites> Websites { get; set; }
 	}
 }

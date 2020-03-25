@@ -12,5 +12,6 @@ namespace Blog.Models
 	{
 		Task<string> SaveImage(IFormFile image);
 		void DeleteImage(string imageName);
+		Task<string> SaveOrCreateImage(string oldImagePath, string imagePath, IFormFile image);
 	}
 }

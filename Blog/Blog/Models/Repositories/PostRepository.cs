@@ -1,4 +1,7 @@
 ﻿using Blog.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +12,12 @@ namespace Blog.Models.Repositories
 	public class PostRepository : IPostRepository
 	{
 		private ApplicationDbContext context;
+		private readonly IFileManager fileManager;
 
-		public PostRepository(ApplicationDbContext context)
+		public PostRepository(ApplicationDbContext context, IFileManager fileManager)
 		{
 			this.context = context;
+			this.fileManager = fileManager;
 		}
 
 		public IEnumerable<Post> Get()
@@ -68,15 +73,34 @@ namespace Blog.Models.Repositories
 			context.Posts.Add(entity);
 		}
 
-		public void Update(int id, Post entity)
+		public async Task Create(Post post, IFormFile image)
 		{
-			if (entity == null)
+			if (image != null)
+				post.ImagePath = await fileManager.SaveImage(image);
+			context.Posts.Add(post);
+		}
+
+		public async void Update(int id, Post entity)
+		{
+			await Update(id, entity, null);
+		}
+
+		public async Task Update(int id, Post post, IFormFile image)
+		{
+			if (post == null)
 				throw new ArgumentNullException();
 
-			Post oldPost = context.Posts.SingleOrDefault(x => x.Id == id);
-			if (entity == null)
-				throw new ArgumentOutOfRangeException("Can't find and update item with id: " + id);
+			Post oldPost = context.Posts.SingleOrDefault(x => x.Id == id) ??
+					throw new ArgumentOutOfRangeException("Can't find and update item with id: " + id);
 
+			if (image != null)
+				post.ImagePath = await fileManager.SaveOrCreateImage(oldPost.ImagePath, post.ImagePath, image);
+
+			AssignNewValues(post, oldPost);
+		}
+
+		private static void AssignNewValues(Post entity, Post oldPost)
+		{
 			oldPost.Title = entity.Title;
 			oldPost.Content = entity.Content;
 			oldPost.Excerpt = entity.Excerpt;
@@ -89,11 +113,15 @@ namespace Blog.Models.Repositories
 			oldPost.Updated = DateTime.Now;
 		}
 
+
 		public bool Delete(int id)
 		{
 			Post post = context.Posts.FirstOrDefault(x => x.Id == id);
 			if (post != null)
 			{
+				if (!string.IsNullOrEmpty(post.ImagePath))
+					fileManager.DeleteImage(post.ImagePath);
+
 				context.Posts.Remove(post);
 				return true;
 			}

@@ -16,5 +16,7 @@ namespace Blog.Models
 		[ForeignKey(name: "Websites")]
 		public int WebsitesId { get; set; }
 		public virtual Websites Websites { get; set; }
+
+		public string ImagePath { get; set; }
 	}
 }

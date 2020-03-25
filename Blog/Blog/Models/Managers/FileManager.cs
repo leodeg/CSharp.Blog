@@ -54,5 +54,19 @@ namespace Blog.Models
 				throw;
 			}
 		}
+
+		public async Task<string> SaveOrCreateImage(string oldImagePath, string imagePath, IFormFile image)
+		{
+			if (string.IsNullOrWhiteSpace(oldImagePath))
+				return await SaveImage(image);
+
+			if (oldImagePath != imagePath)
+			{
+				DeleteImage(oldImagePath);
+				return await SaveImage(image);
+			}
+
+			throw new ArgumentException();
+		}
 	}
 }
