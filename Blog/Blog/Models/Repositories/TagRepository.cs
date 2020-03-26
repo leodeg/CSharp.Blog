@@ -37,7 +37,7 @@ namespace Blog.Models.Repositories
 
 		public void Create(string tag)
 		{
-			if (context.Tags.Count(x => x.Name.CompareTo(tag) == 0) == 0)
+			if (context.Tags.Count(x => x.Name == tag.Trim()) == 0)
 				context.Tags.Add(new Tag() { Name = tag.Trim() });
 		}
 
