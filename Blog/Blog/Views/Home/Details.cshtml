@@ -1,0 +1,37 @@
+﻿@model Blog.Models.Post
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<section class="post">
+	<h1>@Model.Title</h1>
+	<p class="content">
+		@Html.Raw(Markdig.Markdown.ToHtml(Model.Content))
+
+		<!--
+			Html.Row() -   Anything in between the ( ) will be rendered as actual HTML.
+							Without this part all of our HTML tags would be automatically
+							escaped, which means we'd essentially be showing out users HTML
+							code instead of simple plain text.
+			---------------------------------------------------------------------------------
+			Markdig    -   We're specifying that we wish to use something from the Markdig
+							namespace.
+			---------------------------------------------------------------------------------
+			Markdown    -   A static class inside of the Markdig namespace.
+			---------------------------------------------------------------------------------
+			ToHtml()    -   A method that turns everything between ( ) from markdown to HTML
+		 -->
+
+	</p>
+	<a href="/">Back</a>
+</section>
+
+<section id="admin">
+	<a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary my-1"><i class="fas fa-eye"></i> Details</a>
+	<a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning my-1"><i class="fas fa-edit"></i> Edit</a>
+	<a asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger my-1"
+	   onclick="return confirm('Are you sure to delete this?');">
+		<i class="fas fa-trash"></i> Delete
+	</a>
+</section>

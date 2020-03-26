@@ -1,8 +1,65 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Blog.Models.ViewModels.HomeViewModel
+
+@{
+	ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<!-- SEARCH -->
+<section id="search" class="mt-3 mb-3">
+	<div class="container px-4">
+		<div class="row">
+			<form class="form-inline w-100" asp-controller="Home" asp-action="Index" method="get" role="form" enctype="multipart/form-data">
+				<div class="col-md-10 p-0">
+					<input type="text" class="form-control rounded-0 w-100" id="title" name="title" placeholder="Поиск по названию...">
+				</div>
+				<div class="col-md-2 p-0">
+					<input type="submit" class="btn btn-primary w-100" value="Искать" />
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+
+<section id="posts">
+	<div class="container">
+		<div class="row">
+			<!-- TAGS CLOUD -->
+			<div class="col-md-4 d-none d-lg-block order-2">
+				@await Component.InvokeAsync("TagCloud")
+			</div>
+
+			<!-- POSTS -->
+			<div class="row col-md-8 order-1">
+				@if (Model.Posts != null && Model.Posts.Count() > 0)
+				{
+					@foreach (var post in Model.Posts)
+					{
+						<div class="card col-md-12 mb-3 p-0">
+							<div class="card-header">
+								<h3>@post.Title</h3>
+							</div>
+							<div class="card-body">
+								<p>@post.Excerpt</p>
+								<hr />
+								<a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id">Show More &#x2192;</a>
+							</div>
+							<div class="card-footer small">
+								<div class="row">
+									<p class="ml-2"><i class="fas fa-eye"></i> Views: @post.Views</p>
+									<div class="ml-auto mr-2">
+										<p>Posted: @post.Created.ToShortDateString()</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+	<!-- PAGINATION -->
+	<div paging-information="@Model.PagingInformation" page-action="Index"></div>
+</section>
+

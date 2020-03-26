@@ -6,12 +6,12 @@
 
 		<ul>
 			<li>
-				<a asp-controller="Posts" asp-action="Index" asp-route-tag=""><span>Show All</span></a>
+				<a asp-action="Index" asp-route-tag=""><span>Show All</span></a>
 			</li>
 			@foreach (var tag in Model)
 			{
 				<li>
-					<a asp-controller="Posts" asp-action="Index" asp-route-tag="@tag.Name"><span>@tag.Name</span> </a>
+					<a asp-action="Index" asp-route-tag="@tag.Name"><span>@tag.Name</span> </a>
 				</li>
 			}
 		</ul>

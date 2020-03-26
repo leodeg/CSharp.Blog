@@ -27,7 +27,7 @@ namespace Blog.Models.Repositories
 
 		public Tag Get(string tag)
 		{
-			return context.Tags.FirstOrDefault(x => x.Name == tag);
+			return context.Tags.SingleOrDefault(x => x.Name == tag);
 		}
 
 		public void Create(Tag entity)
@@ -37,7 +37,7 @@ namespace Blog.Models.Repositories
 
 		public void Create(string tag)
 		{
-			if (Get(tag) == default)
+			if (context.Tags.Count(x => x.Name.CompareTo(tag) == 0) == 0)
 				context.Tags.Add(new Tag() { Name = tag.Trim() });
 		}
 

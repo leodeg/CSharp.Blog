@@ -22,7 +22,7 @@ namespace Blog.Models.Repositories
 
 		public IEnumerable<Post> Get()
 		{
-			return context.Posts;
+			return context.Posts.OrderByDescending(x => x.Created);
 		}
 
 		public Post Get(int id)
