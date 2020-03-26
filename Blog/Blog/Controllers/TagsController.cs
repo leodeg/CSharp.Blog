@@ -23,6 +23,11 @@ namespace Blog.Controllers
 			return View(repository.Get().OrderBy(x => x.Name));
 		}
 
+		public JsonResult GetTags(string term)
+		{
+			return Json(repository.Get().Where(c => c.Name.Contains(term)).Select(x => x.Name).ToList());
+		}
+
 		public IActionResult Details(int? id)
 		{
 			if (id == null)

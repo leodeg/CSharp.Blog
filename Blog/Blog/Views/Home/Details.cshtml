@@ -7,24 +7,10 @@
 <section class="post">
 	<h1>@Model.Title</h1>
 	<p class="content">
-		@Html.Raw(Markdig.Markdown.ToHtml(Model.Content))
-
-		<!--
-			Html.Row() -   Anything in between the ( ) will be rendered as actual HTML.
-							Without this part all of our HTML tags would be automatically
-							escaped, which means we'd essentially be showing out users HTML
-							code instead of simple plain text.
-			---------------------------------------------------------------------------------
-			Markdig    -   We're specifying that we wish to use something from the Markdig
-							namespace.
-			---------------------------------------------------------------------------------
-			Markdown    -   A static class inside of the Markdig namespace.
-			---------------------------------------------------------------------------------
-			ToHtml()    -   A method that turns everything between ( ) from markdown to HTML
-		 -->
+		@Html.Raw(Model.Content)
 
 	</p>
-	<a href="/">Back</a>
+	<a href="/" class="btn btn-primary">Back</a>
 </section>
 
 <section id="admin">

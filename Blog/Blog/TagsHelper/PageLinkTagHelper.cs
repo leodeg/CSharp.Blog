@@ -43,26 +43,7 @@ namespace Blog.TagsHelper
 				tag.InnerHtml.AppendHtml(previousPage);
 			}
 
-			if (PagingInformation.TotalPages <= 6)
-			{
-				CreatePagination(tag, urlHelper, 1, PagingInformation.TotalPages);
-			}
-			else if (PagingInformation.TotalPages > 6)
-			{
-				if (PagingInformation.CurrentPage <= 3)
-					CreatePagination(tag, urlHelper, 1, 3);
-				else if (PagingInformation.CurrentPage > 3)
-					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage - 3, PagingInformation.CurrentPage);
-
-				int leftPages = PagingInformation.TotalPages - PagingInformation.CurrentPage;
-
-				if (leftPages > 0 && leftPages <= 2)
-					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage + 1, PagingInformation.CurrentPage + leftPages);
-				else if (PagingInformation.CurrentPage <= 3)
-					CreatePagination(tag, urlHelper, PagingInformation.TotalPages - 2, PagingInformation.TotalPages);
-				else if (leftPages > 0)
-					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage + 1, PagingInformation.CurrentPage + 3);
-			}
+			CreateMiddlePages(urlHelper, tag);
 
 			if (PagingInformation.HasNextPage)
 			{
@@ -73,6 +54,40 @@ namespace Blog.TagsHelper
 			}
 
 			output.Content.AppendHtml(tag);
+		}
+
+		private void CreateMiddlePages(IUrlHelper urlHelper, TagBuilder tag)
+		{
+			if (PagingInformation.TotalPages <= 6)
+			{
+				CreatePagination(tag, urlHelper, 1, PagingInformation.TotalPages);
+			}
+			else if (PagingInformation.TotalPages > 6)
+			{
+				int leftPages = PagingInformation.TotalPages - PagingInformation.CurrentPage;
+
+				if (PagingInformation.CurrentPage <= 3)
+				{
+					CreatePagination(tag, urlHelper, 1, 3);
+				}
+				else if (PagingInformation.CurrentPage > 3)
+				{
+					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage - 3, PagingInformation.CurrentPage);
+				}
+
+				if (PagingInformation.CurrentPage <= 3)
+				{
+					CreatePagination(tag, urlHelper, PagingInformation.TotalPages - 2, PagingInformation.TotalPages);
+				}
+				else if (leftPages > 0 && leftPages <= 2)
+				{
+					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage + 1, PagingInformation.CurrentPage + leftPages);
+				}
+				else if (leftPages > 0)
+				{
+					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage + 1, PagingInformation.CurrentPage + 3);
+				}
+			}
 		}
 
 		private void CreatePagination(TagBuilder tag, IUrlHelper urlHelper, int start, int end)

@@ -24,19 +24,10 @@ else
 				<input asp-for="Title" class="form-control" />
 				<span asp-validation-for="Title" class="text-danger"></span>
 			</div>
-			<div class="form-group">
-				<label asp-for="Excerpt" class="control-label"></label>
-				<textarea asp-for="Excerpt" class="form-control"></textarea>
-				<span asp-validation-for="Excerpt" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Content" class="control-label"></label>
-				<textarea asp-for="Content" class="form-control"></textarea>
-				<span asp-validation-for="Content" class="text-danger"></span>
-			</div>
+
 			<div class="form-group">
 				<label asp-for="Tags" class="control-label"></label>
-				<textarea asp-for="Tags" class="form-control"></textarea>
+				<input asp-for="Tags" class="form-control" id="tags" />
 				<span asp-validation-for="Tags" class="text-danger"></span>
 			</div>
 
@@ -45,11 +36,25 @@ else
 				<input asp-for="Views" class="form-control" />
 				<span asp-validation-for="Views" class="text-danger"></span>
 			</div>
+
+			<div class="form-group">
+				<label asp-for="Excerpt" class="control-label"></label>
+				<textarea asp-for="Excerpt" class="form-control"></textarea>
+				<span asp-validation-for="Excerpt" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Content" class="control-label"></label>
+				<textarea asp-for="Content" id="content" class="form-control"></textarea>
+				<span asp-validation-for="Content" class="text-danger"></span>
+			</div>
+
 			<div class="form-group">
 				<label asp-for="ImagePath" class="control-label"></label>
 				<input type="file" name="image" class="form-control-file" />
 				<span asp-validation-for="ImagePath" class="text-danger"></span>
 			</div>
+
 			<div class="form-group form-check">
 				<label class="form-check-label">
 					<input class="form-check-input" asp-for="Public" /> @Html.DisplayNameFor(model => model.Public)
@@ -68,9 +73,26 @@ else
 	<a asp-action="Index"><i class="fas fa-arrow-left"></i> Back to List</a>
 </div>
 
-
-
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+	<script src="~/lib/trumbowyg/trumbowyg.min.js"></script>
+	<link rel="stylesheet" href="~/lib/trumbowyg/ui/trumbowyg.min.css">
+
+	<script src="~/lib/jquery-ui/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui-1.12.1/jquery-ui.min.css">
+
+	<script>
+		$('#content').trumbowyg();
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#tags').autocomplete({
+				source: '@Url.Action("GetTags", "Tags")',
+				multiple: true
+			});
+		});
+	</script>
 }
 

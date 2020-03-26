@@ -70,6 +70,8 @@ namespace Blog.Controllers
 			if (post == null)
 				return NotFound();
 
+			++post.Views;
+			postsRepository.SaveAsync();
 			return View(post);
 		}
 

@@ -19,7 +19,7 @@ namespace Blog.Controllers
 		private readonly ITagRepository tagsRepository;
 		private readonly IFileManager fileManager;
 
-		private readonly int ItemsPerPage = 1;
+		private readonly int ItemsPerPage = 50;
 		private readonly string PostForm = "PostForm";
 
 		public PostsController(IPostRepository postsRepository, ITagRepository tagsRepository, IFileManager fileManager)
