@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Blog.Models.Post>
+﻿@model Blog.Models.ViewModels.PostsViewModel
 
 @{
 	ViewData["Title"] = "Index";
@@ -40,30 +40,18 @@
 	<table class="table table-striped">
 		<thead class="thead-dark">
 			<tr>
-				<th>
-					@Html.DisplayNameFor(model => model.Title)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Views)
-				</th>
-				<th class="d-none d-md-table-cell">
-					@Html.DisplayNameFor(model => model.Public)
-				</th>
-				<th class="d-none d-md-table-cell">
-					@Html.DisplayNameFor(model => model.Created)
-				</th>
-				<th class="d-none d-md-table-cell">
-					@Html.DisplayNameFor(model => model.Updated)
-				</th>
-				<th>
-					Actions
-				</th>
+				<th>Title</th>
+				<th>Views</th>
+				<th class="d-none d-md-table-cell">Public</th>
+				<th class="d-none d-md-table-cell">Created</th>
+				<th class="d-none d-md-table-cell">Updated</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-			@if (Model.Any())
+			@if (Model.Posts.Any())
 			{
-				@foreach (var item in Model)
+				@foreach (var item in Model.Posts)
 				{
 					<tr>
 						<td>
@@ -94,4 +82,7 @@
 			}
 		</tbody>
 	</table>
+
+	<!-- PAGINATION -->
+	<div paging-information="@Model.PagingInformation" page-action="Index" class="mx-auto"></div>
 </section>

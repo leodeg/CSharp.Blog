@@ -35,23 +35,53 @@ namespace Blog.TagsHelper
 			TagBuilder tag = new TagBuilder("ul");
 			tag.AddCssClass("pagination");
 
-			TagBuilder currentItem = CreateTag(PagingInformation.CurrentPage, urlHelper);
-
 			if (PagingInformation.HasPreviousPage)
 			{
-				TagBuilder previousItem = CreateTag(PagingInformation.CurrentPage - 1, urlHelper, "Previous");
-				tag.InnerHtml.AppendHtml(previousItem);
+				TagBuilder previousPage = CreateTag(PagingInformation.CurrentPage - 1, urlHelper, "Previous");
+				TagBuilder firstPage = CreateTag(1, urlHelper, "First Page");
+				tag.InnerHtml.AppendHtml(firstPage);
+				tag.InnerHtml.AppendHtml(previousPage);
 			}
 
-			tag.InnerHtml.AppendHtml(currentItem);
+			if (PagingInformation.TotalPages <= 6)
+			{
+				CreatePagination(tag, urlHelper, 1, PagingInformation.TotalPages);
+			}
+			else if (PagingInformation.TotalPages > 6)
+			{
+				if (PagingInformation.CurrentPage <= 3)
+					CreatePagination(tag, urlHelper, 1, 3);
+				else if (PagingInformation.CurrentPage > 3)
+					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage - 3, PagingInformation.CurrentPage);
+
+				int leftPages = PagingInformation.TotalPages - PagingInformation.CurrentPage;
+
+				if (leftPages > 0 && leftPages <= 2)
+					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage + 1, PagingInformation.CurrentPage + leftPages);
+				else if (PagingInformation.CurrentPage <= 3)
+					CreatePagination(tag, urlHelper, PagingInformation.TotalPages - 2, PagingInformation.TotalPages);
+				else if (leftPages > 0)
+					CreatePagination(tag, urlHelper, PagingInformation.CurrentPage + 1, PagingInformation.CurrentPage + 3);
+			}
 
 			if (PagingInformation.HasNextPage)
 			{
-				TagBuilder nextItem = CreateTag(PagingInformation.CurrentPage + 1, urlHelper, "Next");
-				tag.InnerHtml.AppendHtml(nextItem);
+				TagBuilder nextPage = CreateTag(PagingInformation.CurrentPage + 1, urlHelper, "Next");
+				TagBuilder lastPage = CreateTag(PagingInformation.TotalPages, urlHelper, "Last Page");
+				tag.InnerHtml.AppendHtml(nextPage);
+				tag.InnerHtml.AppendHtml(lastPage);
 			}
 
 			output.Content.AppendHtml(tag);
+		}
+
+		private void CreatePagination(TagBuilder tag, IUrlHelper urlHelper, int start, int end)
+		{
+			for (int i = start; i <= end; i++)
+			{
+				TagBuilder current = CreateTag(i, urlHelper);
+				tag.InnerHtml.AppendHtml(current);
+			}
 		}
 
 		private TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper, string title = null)
@@ -67,7 +97,7 @@ namespace Blog.TagsHelper
 			item.AddCssClass("page-item");
 			link.AddCssClass("page-link");
 
-			link.InnerHtml.Append(title?? pageNumber.ToString());
+			link.InnerHtml.Append(title ?? pageNumber.ToString());
 			item.InnerHtml.AppendHtml(link);
 			return item;
 		}

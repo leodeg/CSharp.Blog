@@ -9,6 +9,7 @@ using Blog.Data;
 using Blog.Models;
 using Blog.Models.Repositories;
 using Microsoft.AspNetCore.Http;
+using Blog.Models.ViewModels;
 
 namespace Blog.Controllers
 {
@@ -18,6 +19,7 @@ namespace Blog.Controllers
 		private readonly ITagRepository tagsRepository;
 		private readonly IFileManager fileManager;
 
+		private readonly int ItemsPerPage = 1;
 		private readonly string PostForm = "PostForm";
 
 		public PostsController(IPostRepository postsRepository, ITagRepository tagsRepository, IFileManager fileManager)
@@ -27,15 +29,37 @@ namespace Blog.Controllers
 			this.fileManager = fileManager;
 		}
 
-		public IActionResult Index(string tag = "", string title = "")
+		public IActionResult Index(string tag = "", string title = "", int page = 1)
+		{
+			var posts = GetPosts(tag, title);
+			int totalPosts = posts.Count();
+
+			if (totalPosts > ItemsPerPage)
+				posts = posts.Skip((page - 1) * ItemsPerPage).Take(ItemsPerPage);
+
+			PostsViewModel homeViewModel = new PostsViewModel()
+			{
+				Posts = posts,
+				PagingInformation = new PagingInformation()
+				{
+					CurrentPage = page,
+					ItemsPerPage = ItemsPerPage,
+					TotalItems = totalPosts
+				}
+			};
+
+			return View(homeViewModel);
+		}
+
+		private IEnumerable<Post> GetPosts(string tag = "", string title = "")
 		{
 			if (!string.IsNullOrEmpty(tag))
-				return View(postsRepository.GetByTag(tag));
+				return postsRepository.GetByTag(tag);
 
 			if (!string.IsNullOrEmpty(title))
-				return View(postsRepository.GetByTitle(title));
+				return postsRepository.GetByTitle(title);
 
-			return View(postsRepository.Get());
+			return postsRepository.Get();
 		}
 
 		public IActionResult Details(int? id)

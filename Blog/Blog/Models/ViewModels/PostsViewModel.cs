@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.ViewModels
 {
-	public class PostViewModel
+	public class PostsViewModel
 	{
-		public Post Post { get; set; }
-		public IFormFile FormFile { get; set; }
+		public IEnumerable<Post> Posts { get; set; }
+		public PagingInformation PagingInformation { get; set; }
 	}
 }

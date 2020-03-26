@@ -55,11 +55,18 @@
 						</div>
 					}
 				}
+				else
+				{
+					<div class="col-md-12 mt-2 text-center text-danger">
+						<h4>No News Found</h4>
+					</div>
+				}
+
+
+				<!-- PAGINATION -->
+				<div paging-information="@Model.PagingInformation" page-action="Index" class="mx-auto"></div>
 			</div>
 		</div>
 	</div>
-
-	<!-- PAGINATION -->
-	<div paging-information="@Model.PagingInformation" page-action="Index"></div>
 </section>
 
