@@ -11,45 +11,51 @@
 		<div class="row">
 			<form class="form-inline w-100" asp-controller="Home" asp-action="Index" method="get" role="form" enctype="multipart/form-data">
 				<div class="col-md-10 p-0">
-					<input type="text" class="form-control rounded-0 w-100" id="title" name="title" placeholder="Поиск по названию...">
+					<input type="text" class="form-control rounded-0 w-100" id="title" name="title" placeholder="Search by title...">
 				</div>
 				<div class="col-md-2 p-0">
-					<input type="submit" class="btn btn-primary w-100" value="Искать" />
+					<button type="submit" class="btn btn-dark w-100" value="Search"><i class="fas fa-search"></i></button>
 				</div>
 			</form>
 		</div>
 	</div>
 </section>
 
+
+
 <section id="posts">
 	<div class="container">
 		<div class="row">
 			<!-- TAGS CLOUD -->
-			<div class="col-md-4 d-none d-lg-block order-2">
+			<div class="col-md-3 d-none d-lg-block order-2 ml-auto">
 				@await Component.InvokeAsync("TagCloud")
+
+				<p>
+					<a asp-controller="Posts" asp-action="Create" class="btn btn-primary btn-block">New Post</a>
+				</p>
 			</div>
 
 			<!-- POSTS -->
-			<div class="row col-md-8 order-1">
+			<div class="row col-sm-12 col-md-9 mx-auto order-1">
 				@if (Model.Posts != null && Model.Posts.Count() > 0)
 				{
 					@foreach (var post in Model.Posts)
 					{
+
 						<div class="card col-md-12 mb-3 p-0">
-							<div class="card-header">
-								<h3>@post.Title</h3>
-							</div>
-							<div class="card-body">
-								<p>@post.Excerpt</p>
-								<hr />
-								<a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id">Show More &#x2192;</a>
-							</div>
-							<div class="card-footer small">
-								<div class="row">
-									<p class="ml-2"><i class="fas fa-eye"></i> Views: @post.Views</p>
-									<div class="ml-auto mr-2">
-										<p>Posted: @post.Created.ToShortDateString()</p>
-									</div>
+							@if (!string.IsNullOrEmpty(post.ImagePath))
+							{
+								<div class="g-item-news" style="background-image:url('/content/img/@post.ImagePath');"></div>
+							}
+							<div class="card-body py-2">
+								<p class="card-text mb-2"><small>@post.Tags</small></p>
+								<hr class="my-2" />
+								<a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id" class="text-dark"><h4 class="card-title">@post.Title</h4></a>
+								<p class="card-text mb-4">@post.Excerpt</p>
+								<div class="row col-12">
+									<p class="card-text"><small class="text-muted">Posted: @post.Created.ToShortDateString()</small></p>
+									<p class="card-text ml-2"><small class="text-muted"><i class="fas fa-eye"></i> @post.Views</small></p>
+									<a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id" class="ml-auto text-dark float-right">Show more &#x2192;</a>
 								</div>
 							</div>
 						</div>
@@ -68,4 +74,5 @@
 		</div>
 	</div>
 </section>
+
 

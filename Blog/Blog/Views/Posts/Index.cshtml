@@ -26,6 +26,10 @@
 	</div>
 </section>
 
+<p>
+	<a asp-action="Create" class="btn btn-primary ">New Post</a>
+</p>
+
 <!-- TAGS CLOUD -->
 <div class="col-md-12 d-none d-lg-block">
 	@await Component.InvokeAsync("TagCloud")
@@ -33,10 +37,6 @@
 
 <!-- POSTS TABLE -->
 <section id="post-table">
-	<p>
-		<a asp-action="Create" class="btn btn-primary btn-block m-auto">New Post</a>
-	</p>
-
 	<table class="table table-striped">
 		<thead class="thead-dark">
 			<tr>

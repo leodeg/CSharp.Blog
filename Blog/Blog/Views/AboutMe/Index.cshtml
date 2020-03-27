@@ -4,19 +4,60 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<section id="about-me">
+	<div class="container col-md-12">
+		<div class="text-center">
+			@if (!string.IsNullOrEmpty(@Model.ImagePath))
+			{
+				<div class="about-me-img" style="background-image:url('/content/img/@Model.ImagePath');"></div>
+			}
+			<div class="row col-md-5 mx-auto justify-content-between">
+				@if (!string.IsNullOrEmpty(Model.Websites.Website))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Website"><i class="fas fa-newspaper"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.Github))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Github"><i class="fab fa-github"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.Youtube))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Youtube"><i class="fab fa-youtube"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.Instagram))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Instagram"><i class="fab fa-instagram"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.LinkedIn))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.LinkedIn"><i class="fab fa-linkedin"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.Facebook))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Facebook"><i class="fab fa-facebook"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.Vkontakte))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Vkontakte"><i class="fab fa-vk"></i></a>
+				}
+				@if (!string.IsNullOrEmpty(Model.Websites.Twitter))
+				{
+					<a class="social-link text-dark" href="@Model.Websites.Twitter"><i class="fab fa-twitter"></i></a>
+				}
+			</div>
+			<h3>@Model.Title</h3>
+		</div>
+		<p>@Html.Raw(@Model.Description)</p>
+	</div>
+</section>
 
-<a asp-action="Create" class="btn btn-primary"><i class="fas fa-edit"></i> Create</a>
 
 
 
-@if (Model != null)
-{
-	<a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary"><i class="fas fa-eye"></i> Details</a>
-	<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-	<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger"
-	   onclick="return confirm('Are you sure to delete this?');">
-		<i class="fas fa-edit"></i> Delete
-	</a>
-
-}
+<div class="float-right">
+	@if (Model != null)
+	{
+		<a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary"><i class="fas fa-eye"></i> Details</a>
+		<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+	}
+</div>
