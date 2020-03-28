@@ -4,7 +4,7 @@
 	ViewData["Title"] = Model.Id == 0 ? "Create Post" : "Edit Post";
 }
 
-<h1>Post</h1>
+<h1 class="mb-4 text-center">Post</h1>
 @if (Model.Id == 0)
 {
 	<h3>Create</h3>
@@ -81,7 +81,6 @@ else
 
 	<script src="~/lib/jquery-ui/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 	<script src="~/lib/trumbowyg/trumbowyg.min.js"></script>
-
 
 	<script>
 		$('#content').trumbowyg();

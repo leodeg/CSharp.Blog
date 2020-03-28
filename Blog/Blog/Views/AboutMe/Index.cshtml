@@ -1,17 +1,17 @@
 ﻿@model Blog.Models.AboutMe
 
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = Model.Title;
 }
 
-<section id="about-me">
+<section id="about-me" class="mb-4">
 	<div class="container col-md-12">
 		<div class="text-center">
 			@if (!string.IsNullOrEmpty(@Model.ImagePath))
 			{
 				<div class="about-me-img" style="background-image:url('/content/img/@Model.ImagePath');"></div>
 			}
-			<div class="row col-md-5 mx-auto justify-content-between">
+			<div class="row col-md-5 mx-auto justify-content-between mb-3">
 				@if (!string.IsNullOrEmpty(Model.Websites.Website))
 				{
 					<a class="social-link text-dark" href="@Model.Websites.Website"><i class="fas fa-newspaper"></i></a>
@@ -50,9 +50,6 @@
 		<p>@Html.Raw(@Model.Description)</p>
 	</div>
 </section>
-
-
-
 
 <div class="float-right">
 	@if (Model != null)

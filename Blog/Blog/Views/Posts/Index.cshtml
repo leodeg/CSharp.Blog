@@ -1,7 +1,7 @@
 ﻿@model Blog.Models.ViewModels.PostsViewModel
 
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "Posts Table";
 }
 
 <h1>Posts</h1>
@@ -16,10 +16,10 @@
 		<div class="row">
 			<form class="form-inline w-100" asp-controller="Posts" asp-action="Index" method="get" role="form" enctype="multipart/form-data">
 				<div class="col-md-10 p-0">
-					<input type="text" class="form-control rounded-0 w-100" id="title" name="title" placeholder="Поиск по названию...">
+					<input type="text" class="form-control rounded-0 w-100" id="title" name="title" placeholder="Search by title...">
 				</div>
 				<div class="col-md-2 p-0">
-					<input type="submit" class="btn btn-primary w-100" value="Искать" />
+					<button type="submit" class="btn btn-dark w-100" value="Search"><i class="fas fa-search"></i></button>
 				</div>
 			</form>
 		</div>
@@ -27,13 +27,9 @@
 </section>
 
 <p>
-	<a asp-action="Create" class="btn btn-primary ">New Post</a>
+	<a asp-action="Create" class="btn btn-danger btn-block">New Post</a>
 </p>
 
-<!-- TAGS CLOUD -->
-<div class="col-md-12 d-none d-lg-block">
-	@await Component.InvokeAsync("TagCloud")
-</div>
 
 <!-- POSTS TABLE -->
 <section id="post-table">

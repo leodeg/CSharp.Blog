@@ -4,7 +4,7 @@
 	ViewData["Title"] = Model.Id == 0 ? "Create Post" : "Edit Post";
 }
 
-<h1>About Me</h1>
+<h1 class="mb-4 text-center">About Me</h1>
 @if (Model.Id == 0)
 {
 	<h3>Create</h3>
@@ -35,7 +35,7 @@ else
 				<span asp-validation-for="@Model.Description" class="text-danger"></span>
 			</div>
 
-			<h3>Contacts</h3>
+			<h3 class="mt-5">Contacts</h3>
 			<hr />
 			<div class="form-group">
 				<label asp-for="@Model.Contacts.Phone" class="control-label"></label>
@@ -64,7 +64,7 @@ else
 				<span asp-validation-for="@Model.Contacts.PostAddress" class="text-danger"></span>
 			</div>
 
-			<h3>Websites</h3>
+			<h3 class="mt-5">Websites</h3>
 			<hr />
 			<div class="form-group">
 				<label asp-for="@Model.Websites.Website" class="control-label"></label>
@@ -107,7 +107,7 @@ else
 				<span asp-validation-for="@Model.Websites.Vkontakte" class="text-danger"></span>
 			</div>
 
-			<h3>Image</h3>
+			<h3 class="mt-5">Image</h3>
 			<hr />
 			<div class="form-group">
 				<label asp-for="ImagePath" class="control-label"></label>
