@@ -60,6 +60,11 @@
 							<p class="small ml-auto">@comment.Created.ToShortDateString()</p>
 						</div>
 						<p class="mb-0">@comment.Message</p>
+						<a asp-controller="Comments" asp-action="Delete"
+						   asp-route-id="@comment.Id"
+						   asp-route-returnUrl="@Context.Request.Path"
+						   onclick="return confirm('Are you sure to delete this?');"
+						   class="btn btn-danger btn-sm float-right mb-3">Delete</a>
 						<hr />
 					</div>
 				}

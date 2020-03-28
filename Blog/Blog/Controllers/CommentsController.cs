@@ -31,6 +31,16 @@ namespace Blog.Controllers
 			return Redirect(commentViewModel.ReturnUrl);
 		}
 
+		public async Task<IActionResult> Delete(int? id, string returnUrl)
+		{
+			if (id == null)
+				return NotFound();
 
+			if (!commentRepository.Delete(id.Value))
+				return BadRequest();
+
+			await commentRepository.SaveAsync();
+			return Redirect(returnUrl);
+		}
 	}
 }
