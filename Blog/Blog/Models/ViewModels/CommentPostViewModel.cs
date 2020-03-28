@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Blog.Models.ViewModels
 {
 
-	public class CommentViewModel
+	public class CommentPostViewModel
 	{
 		public int PostId { get; set; }
 		public Comment Comment { get; set; }

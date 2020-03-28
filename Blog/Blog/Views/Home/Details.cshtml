@@ -44,7 +44,7 @@
 		<h4>New Comment</h4>
 		<hr />
 		<div class="col-md-6 mb-4">
-			@await Html.PartialAsync("_CommentCreateForm", new Blog.Models.ViewModels.CommentViewModel { PostId = Model.Post.Id, Comment = new Comment(), ReturnUrl = Context.Request.Path })
+			@await Html.PartialAsync("_CommentCreateForm", new Blog.Models.ViewModels.CommentPostViewModel { PostId = Model.Post.Id, Comment = new Comment(), ReturnUrl = Context.Request.Path })
 		</div>
 
 		<h4>Comments</h4>

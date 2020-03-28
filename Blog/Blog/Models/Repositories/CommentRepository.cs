@@ -1,4 +1,5 @@
 ﻿using Blog.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,14 @@ namespace Blog.Models.Repositories
 			return context.Comments.Where(c => c.PostId == id).OrderByDescending(x => x.Created);
 		}
 
+		public IEnumerable<Comment> GetByUserName(string userName)
+		{
+			return context.Comments.Where(c => c.UserName.Contains(userName)).OrderByDescending(x => x.Created);
+		}
+
 		public Comment Get(int id)
 		{
-			return context.Comments.FirstOrDefault(x => x.Id == id);
+			return context.Comments.Include(c => c.Post).FirstOrDefault(x => x.Id == id);
 		}
 
 		public void Create(Comment entity)

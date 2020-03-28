@@ -1,0 +1,56 @@
+﻿@model Blog.Models.Comment
+
+@{
+	ViewData["Title"] = "Comment Details";
+}
+
+<h1 class="text-center mb-3">Comment Details</h1>
+
+<div>
+	<h4>Comment</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.UserName)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.UserName)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Message)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Message)
+		</dd>
+
+		@if (Model.Post != null)
+		{
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Post.Title)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Post.Title)
+			</dd>
+		}
+
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Created)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Created)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Updated)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Updated)
+		</dd>
+	</dl>
+</div>
+<div>
+	<a asp-action="Index" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to List</a>
+	<a asp-action="Delete" asp-route-id="@Model.Id" asp-route-returnUrl="/Comments/Index" class="btn btn-danger"
+	   onclick="return confirm('Are you sure to delete this?');">
+		<i class="fas fa-edit"></i> Delete
+	</a>
+</div>

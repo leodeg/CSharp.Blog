@@ -10,5 +10,6 @@ namespace Blog.Models.Repositories
 	public interface ICommentRepository : IRepository<Comment>
 	{
 		IEnumerable<Comment> GetByPost(int id);
+		IEnumerable<Comment> GetByUserName(string userName);
 	}
 }
