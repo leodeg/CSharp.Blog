@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.ViewModels
 {
-	public class PostsViewModel
-	{
-		public IEnumerable<Post> Posts { get; set; }
-		public PagingInformation PagingInformation { get; set; }
-	}
 
+	public class CommentViewModel
+	{
+		public int PostId { get; set; }
+		public Comment Comment { get; set; }
+		public string ReturnUrl { get; set; }
+	}
 }

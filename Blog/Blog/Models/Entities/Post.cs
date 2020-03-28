@@ -17,6 +17,7 @@ namespace Blog.Models
 		public string Excerpt { get; set; }
 		public string Tags { get; set; }
 
+		[Display(Name = "Image")]
 		public string ImagePath { get; set; }
 
 		public int Views { get; set; }

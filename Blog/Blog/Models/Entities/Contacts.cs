@@ -17,6 +17,8 @@ namespace Blog.Models
 		[Required]
 		public string Country { get; set; }
 		public string City { get; set; }
+
+		[Display(Name = "Post Address")]
 		public string PostAddress { get; set; }
 	}
 }

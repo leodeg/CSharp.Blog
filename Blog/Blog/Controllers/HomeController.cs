@@ -17,14 +17,15 @@ namespace Blog.Controllers
 
 		private readonly ITagRepository tagsRepository;
 		private readonly IPostRepository postsRepository;
-
+		private readonly ICommentRepository commentRepository;
 		private readonly int ItemsPerPage = 4;
 
-		public HomeController(ILogger<HomeController> logger, ITagRepository tagsRepository, IPostRepository postsRepository)
+		public HomeController(ILogger<HomeController> logger, ITagRepository tagsRepository, IPostRepository postsRepository, ICommentRepository commentRepository)
 		{
 			_logger = logger;
 			this.tagsRepository = tagsRepository;
 			this.postsRepository = postsRepository;
+			this.commentRepository = commentRepository;
 		}
 
 		public IActionResult Index(string tag = "", string title = "", int page = 1)
@@ -70,9 +71,15 @@ namespace Blog.Controllers
 			if (post == null)
 				return NotFound();
 
+			PostDetailsViewModel view = new PostDetailsViewModel()
+			{
+				Post = post,
+				Comments = commentRepository.GetByPost(post.Id)
+			};
+
 			++post.Views;
 			postsRepository.SaveAsync();
-			return View(post);
+			return View(view);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

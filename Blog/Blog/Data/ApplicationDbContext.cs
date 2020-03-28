@@ -19,5 +19,6 @@ namespace Blog.Data
 		public DbSet<AboutMe> AboutMe { get; set; }
 		public DbSet<Contacts> Contacts { get; set; }
 		public DbSet<Websites> Websites { get; set; }
+		public DbSet<Comment> Comments { get; set; }
 	}
 }

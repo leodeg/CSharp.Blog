@@ -46,6 +46,9 @@ namespace Blog
 			services.AddTransient<IAboutMeRepository, AboutMeRepository>();
 			services.AddTransient<IRepository<AboutMe>, AboutMeRepository>();
 
+			services.AddTransient<ICommentRepository, CommentRepository>();
+			services.AddTransient<IRepository<Comment>, CommentRepository>();
+
 			services.AddTransient<IFileManager, FileManager>();
 
 			services.AddControllersWithViews();

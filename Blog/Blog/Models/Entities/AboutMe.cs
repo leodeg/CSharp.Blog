@@ -29,6 +29,7 @@ namespace Blog.Models
 
 		public virtual Websites Websites { get; set; }
 
+		[Display(Name = "Image")]
 		public string ImagePath { get; set; }
 	}
 }

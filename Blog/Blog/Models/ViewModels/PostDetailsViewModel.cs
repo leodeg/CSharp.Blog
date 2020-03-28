@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.ViewModels
 {
-	public class PostsViewModel
+	public class PostDetailsViewModel
 	{
-		public IEnumerable<Post> Posts { get; set; }
-		public PagingInformation PagingInformation { get; set; }
+		public Post Post { get; set; }
+		public IEnumerable<Comment> Comments { get; set; }
 	}
 
 }
