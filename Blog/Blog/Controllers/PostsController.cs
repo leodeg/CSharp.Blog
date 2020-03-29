@@ -10,9 +10,11 @@ using Blog.Models;
 using Blog.Models.Repositories;
 using Microsoft.AspNetCore.Http;
 using Blog.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog.Controllers
 {
+	[Authorize(Roles = Roles.Editor)]
 	public class PostsController : Controller
 	{
 		private readonly IPostRepository postsRepository;

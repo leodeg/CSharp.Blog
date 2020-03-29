@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models.Identity
+namespace Blog.Models
 {
-	public class Roles
+	public static class Roles
 	{
-		public readonly string Administrator = "Administrator";
-		public readonly string Editor = "Editor";
-		public readonly string User = "User";
+		public const string Administrator = "Administrator";
+		public const string Editor = "Editor";
+		public const string User = "User";
 	}
 }

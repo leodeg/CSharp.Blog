@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Blog.Models.Repositories;
 using Blog.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Blog
 {
@@ -33,8 +34,13 @@ namespace Blog
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
 
-			services.AddDefaultIdentity<IdentityUser>(options =>
-				options.SignIn.RequireConfirmedAccount = true)
+			//services.AddDefaultIdentity<IdentityUser>(options =>
+			//	options.SignIn.RequireConfirmedAccount = true)
+			//		.AddEntityFrameworkStores<ApplicationDbContext>();
+
+			services.AddIdentity<IdentityUser, IdentityRole>()
+					.AddDefaultTokenProviders()
+					.AddDefaultUI()
 					.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddTransient<ITagRepository, TagRepository>();
@@ -53,6 +59,7 @@ namespace Blog
 
 			services.AddControllersWithViews();
 			services.AddRazorPages();
+			services.AddRouting(options => options.LowercaseUrls = true);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,7 +72,7 @@ namespace Blog
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error");
+				app.UseExceptionHandler("/Blog/Error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
@@ -80,7 +87,8 @@ namespace Blog
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllerRoute(
 					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+					pattern: "{controller=Blog}/{action=Index}/{id?}");
+
 				endpoints.MapRazorPages();
 			});
 		}

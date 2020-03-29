@@ -51,10 +51,13 @@
 	</div>
 </section>
 
-<div class="float-right">
-	@if (Model != null)
-	{
-		<a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary"><i class="fas fa-eye"></i> Details</a>
-		<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
-	}
-</div>
+@if (User.IsInRole(Roles.Editor))
+{
+	<div class="float-right">
+		@if (Model != null)
+		{
+			<a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary"><i class="fas fa-eye"></i> Details</a>
+			<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</a>
+		}
+	</div>
+}

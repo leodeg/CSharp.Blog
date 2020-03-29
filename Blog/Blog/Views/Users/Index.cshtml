@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+
+@{
+	ViewData["Title"] = "Users List";
+}
+
+
+<div class="container">
+	<h4>User List</h4>
+	<!-- BODY -->
+	<section id="table">
+		<table class="table table-striped table-bordered table-hover">
+			<thead class="thead-dark">
+				<tr>
+					<th>Users</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var user in Model)
+				{
+					<tr>
+						<td>@user.Email</td>
+						<td>
+							<a class="btn btn-warning" asp-action="Edit" asp-route-userid="@user.Id"><i class="fas fa-cog"></i> Access rights</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<div class="d-flex justify-content-end">
+			<a class="btn btn-primary" asp-action="RolesList">Roles List <i class="fas fa-arrow-right"></i></a>
+		</div>
+	</section>
+</div>
+

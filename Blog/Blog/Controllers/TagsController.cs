@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blog.Models;
 using Blog.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
+	[Authorize(Roles = Roles.Editor)]
 	public class TagsController : Controller
 	{
 		private readonly ITagRepository repository;

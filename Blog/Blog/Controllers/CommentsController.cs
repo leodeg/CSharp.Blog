@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Blog.Models;
 using Blog.Models.Repositories;
 using Blog.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
+	[Authorize]
 	public class CommentsController : Controller
 	{
 		private readonly ICommentRepository commentRepository;
@@ -19,6 +21,7 @@ namespace Blog.Controllers
 			this.commentRepository = commentRepository;
 		}
 
+		[Authorize(Roles = Roles.Editor)]
 		public IActionResult Index(string userName = "", int page = 1)
 		{
 			var comments = GetComments(userName);
@@ -49,6 +52,7 @@ namespace Blog.Controllers
 			return commentRepository.Get();
 		}
 
+		[Authorize(Roles = Roles.Editor)]
 		public IActionResult Details(int? id)
 		{
 			if (id == null)
@@ -62,6 +66,7 @@ namespace Blog.Controllers
 		}
 
 		[HttpPost]
+		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(CommentPostViewModel commentViewModel)
 		{
@@ -74,6 +79,7 @@ namespace Blog.Controllers
 			return Redirect(commentViewModel.ReturnUrl);
 		}
 
+		[Authorize(Roles = Roles.Editor)]
 		public async Task<IActionResult> Delete(int? id, string returnUrl)
 		{
 			if (id == null)

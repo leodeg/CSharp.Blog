@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.ViewModels
 {
-	public class HomeViewModel
+	public class BlogViewModel
 	{
 		public IEnumerable<Post> Posts { get; set; }
 		public IEnumerable<Tag> Tags { get; set; }

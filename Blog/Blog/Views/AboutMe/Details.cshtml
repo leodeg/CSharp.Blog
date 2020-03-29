@@ -7,7 +7,7 @@
 <h1 class="text-center mb-3">About Me Details</h1>
 
 <div>
-	<h4>Post</h4>
+	<h4>About Me</h4>
 	<hr />
 	<h3>Base Info</h3>
 	<dl class="row">
@@ -17,12 +17,23 @@
 		<dd class="col-sm-10">
 			@Html.DisplayFor(model => model.Title)
 		</dd>
-
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.Excerpt)
 		</dt>
 		<dd class="col-sm-10">
 			@Html.DisplayFor(model => model.Excerpt)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Created)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Created)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Updated)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Updated)
 		</dd>
 	</dl>
 
@@ -128,23 +139,6 @@
 			</dd>
 		</dl>
 	}
-
-
-	<h3>Base Information</h3>
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Created)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Created)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Updated)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Updated)
-		</dd>
-	</dl>
 
 	@if (!string.IsNullOrEmpty(Model.ImagePath))
 	{

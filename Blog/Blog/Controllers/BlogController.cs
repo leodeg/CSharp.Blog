@@ -11,16 +11,16 @@ using Blog.Models.ViewModels;
 
 namespace Blog.Controllers
 {
-	public class HomeController : Controller
+	public class BlogController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
+		private readonly ILogger<BlogController> _logger;
 
 		private readonly ITagRepository tagsRepository;
 		private readonly IPostRepository postsRepository;
 		private readonly ICommentRepository commentRepository;
 		private readonly int ItemsPerPage = 4;
 
-		public HomeController(ILogger<HomeController> logger, ITagRepository tagsRepository, IPostRepository postsRepository, ICommentRepository commentRepository)
+		public BlogController(ILogger<BlogController> logger, ITagRepository tagsRepository, IPostRepository postsRepository, ICommentRepository commentRepository)
 		{
 			_logger = logger;
 			this.tagsRepository = tagsRepository;
@@ -36,7 +36,7 @@ namespace Blog.Controllers
 			if (totalPosts > ItemsPerPage)
 				posts = posts.Skip((page - 1) * ItemsPerPage).Take(ItemsPerPage);
 
-			HomeViewModel homeViewModel = new HomeViewModel()
+			BlogViewModel homeViewModel = new BlogViewModel()
 			{
 				Posts = posts,
 				Tags = tagsRepository.Get(),
