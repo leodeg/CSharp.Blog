@@ -14,24 +14,31 @@ Used Bootstrap theme - [Bootswatch/LUX](https://bootswatch.com/lux/)
    - Load project
 
 #### How to run the application
-  - Clone/Download the project - [download](https://github.com/leodeg/CSharp.NatureCosmeticService/archive/master.zip)
+  - Clone/Download the project - [download](https://github.com/leodeg/CSharp.Blog/archive/master.zip)
   - Open the project from your IDE
   - Run application
 
 
 ## Screenshots
 ### User
+#### Blog Page
 ![Blog Page](img/blog.png)
+#### About me Page
 ![About me Page](img/about-me.png)
+#### Post Page
 ![Post top](img/post-top.png)
 ![Post bottom](img/post_bottom.png)
 
-### Admin
+### Admin Pages
+#### Posts Admin Page
 ![Admin posts](img/admin-posts.png)
 ![Admin posts create](img/admin-posts-create.png)
 ![Admin posts details](img/admin-posts-details.png)
+#### Tags Admin Page
 ![Admin tags](img/admin-tags.png)
+#### Comments Admin Page
 ![Admin comments](img/admin-comments.png)
 ![Admin comments details](img/admin-comments-details.png)
+#### User Manager Admin Page
 ![Admin users](img/admin-users.png)
 ![Admin roles](img/admin-roles.png)
