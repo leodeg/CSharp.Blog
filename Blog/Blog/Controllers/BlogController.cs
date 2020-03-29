@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Blog.Models;
 using Blog.Models.Repositories;
 using Blog.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Blog.Controllers
 {
@@ -62,7 +63,7 @@ namespace Blog.Controllers
 			return postsRepository.Get();
 		}
 
-		public IActionResult Details(int? id)
+		public IActionResult Post(int? id)
 		{
 			if (id == null)
 				return NotFound();
@@ -77,8 +78,11 @@ namespace Blog.Controllers
 				Comments = commentRepository.GetByPost(post.Id)
 			};
 
-			++post.Views;
-			postsRepository.SaveAsync();
+			if (!User.IsInRole(Roles.Administrator) && !User.IsInRole(Roles.Editor))
+			{
+				++post.Views;
+				postsRepository.SaveAsync();
+			}
 			return View(view);
 		}
 
